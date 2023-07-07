@@ -2,7 +2,7 @@
   "name": "serpent-2-syntax-highlighting",
   "displayName": "Serpent 2 Syntax Highlighting",
   "publisher": "ColeFritsch",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "engines": {
     "vscode": "^1.23.0"
   },
