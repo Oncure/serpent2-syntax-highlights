@@ -1,0 +1,25 @@
+{
+  "name": "serpent",
+  "displayName": "Serpent",
+  "description": "Serpent syntax highlighting",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.80.0"
+  },
+  "categories": [
+    "Programming Languages"
+  ],
+  "contributes": {
+    "languages": [{
+      "id": "serpent",
+      "aliases": ["Serpent", "serpent"],
+      "extensions": [".se",".sse"],
+      "configuration": "./language-configuration.json"
+    }],
+    "grammars": [{
+      "language": "serpent",
+      "scopeName": "source.serpent",
+      "path": "./syntaxes/serpent.tmLanguage.json"
+    }]
+  }
+}
