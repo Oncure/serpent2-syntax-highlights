@@ -2,7 +2,7 @@
   "name": "serpent-2-syntax-highlighting",
   "displayName": "Serpent 2 Syntax Highlighting",
   "publisher": "ColeFritsch",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "engines": {
     "vscode": "^1.23.0"
   },
@@ -10,17 +10,27 @@
     "Programming Languages"
   ],
   "contributes": {
-    "languages": [{
-      "id": "serpent",
-      "aliases": ["Serpent", "serpent"],
-      "extensions": [".se",".sse"],
-      "configuration": "./language-configuration.json"
-    }],
-    "grammars": [{
-      "language": "serpent",
-      "scopeName": "source.serpent",
-      "path": "./syntaxes/serpent.tmLanguage.json"
-    }]
+    "languages": [
+      {
+        "id": "serpent",
+        "aliases": [
+          "Serpent",
+          "serpent"
+        ],
+        "extensions": [
+          ".se",
+          ".sse"
+        ],
+        "configuration": "./language-configuration.json"
+      }
+    ],
+    "grammars": [
+      {
+        "language": "serpent",
+        "scopeName": "source.serpent",
+        "path": "./syntaxes/serpent.tmLanguage.json"
+      }
+    ]
   },
   "license": "SEE LICENSE IN LICENSE",
   "repository": {
