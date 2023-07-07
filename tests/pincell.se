@@ -1,0 +1,88 @@
+% From Serpent Wiki: https://serpent.vtt.fi/mediawiki/index.php/Tutorial
+% --- Simple 2D PWR pin-cell geometry for Serpent tutorial
+
+/************************
+ * Material definitions *
+ ************************/
+
+% --- Fuel material (3.0 wt-% enriched uranium dioxide), density 10.1 g/cm3
+
+mat fuel     -10.1
+92235.03c    -0.02644492
+92238.03c    -0.85505247
+ 8016.03c    -0.11850261
+
+% --- Cladding material for fuel rod
+%     (100 % natural zirconium)
+
+mat clad     -6.55
+40000.03c    -1.0
+
+% --- Water at 1.0 g/cm3
+%     Defined using atomic fractions for the composition. 
+%     Hydrogen is flagged as a bound scatterer with the "moder"-card
+
+mat water    -1.0 moder MyThermLib 1001
+ 1001.03c     2.0
+ 8016.03c     1.0
+
+% --- Define thermal scattering libraries associated with hydrogen in light water
+
+therm MyThermLib lwj3.00t
+
+/************************
+ * Geometry definitions *
+ ************************/
+
+% --- Fuel pin structure
+
+pin p1
+fuel    0.4025
+clad    0.4750
+water
+
+% --- Square surface with 1.5 cm side centered at (x,y) = (0,0)
+
+surf s1 sqc 0.0 0.0 0.75
+
+% --- Cell c1 belongs to the base universe 0, is filled with the pin p1
+%     and covers everything inside surface s1
+
+cell c1 0 fill p1   -s1
+
+% --- Cell c2 belongs to the base universe 0, is defined as an "outside" cell
+%     and covers everything outside surface s1
+
+cell c2 0 outside    s1
+
+/******************
+ * Run parameters *
+ ******************/
+
+% --- Neutron population: 5000 neutrons per cycle, 100 active / 20 inactive cycles
+
+set pop 5000 100 20
+
+% --- Boundary condition (1 = black, 2 = reflective, 3 = periodic)
+
+set bc 2
+
+% --- Geometry plots
+%     First two plots are perpendicular to z-axis i.e. xy-plots (3)
+
+% --- First plot is 200 by 200 pixels and covers the whole geometry: -0.75 < (x,y) < 0.75
+
+plot 3  200  200
+
+% --- Second plot is 1000 by 1000 pixels, from axial height z = 0.0 
+%     and covers more than the whole geometry: -2.25 < (x,y) < 2.25
+
+plot 3 1000 1000 0.0 -2.25 2.25 -2.25 2.25
+
+% --- The third plot is perpendicular to y-axis (2) i.e. an xz-plot
+
+plot 2  200  200
+
+% --- 200 by 200 pixel meshplot that covers the whole geometry: -0.75 < (x,y) < 0.75
+
+mesh 3  200  200

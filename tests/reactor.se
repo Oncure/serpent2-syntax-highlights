@@ -1,0 +1,93 @@
+% From Serpent Wiki: https://serpent.vtt.fi/mediawiki/index.php/Tutorial
+% --- Research reactor input for Serpent tutorial
+
+
+% --- Our reactor model will fit inside a cubic surface with an edge length of 100 cm
+surf sCUBE cube 0.0 0.0 0.0 100.0
+
+% --- Link the materials file to this input
+include "materials"
+
+% --- Neutron population: 10000 neutrons per cycle, 100 active / 50 inactive cycles
+set pop 10000 100 50
+
+% --- Geometry plots
+plot 3 200 200 0 -100 100 -100 100 % XY-plot
+plot 2 200 200 0 -100 100 -100 100 % XZ-plot
+
+/******** Radial boundaries of the core **************/
+surf sCYL1 cylz 0.0 0.0 26  % Outer radius of the support plates and core
+surf sCYL2 cylz 0.0 0.0 30  % Inner radius of the graphite reflector
+surf sCYL3 cylz 0.0 0.0 60  % Outer radius of the graphite reflector
+surf sCYL4 cylz 0.0 0.0 100 % Outer radius of the geometry
+
+% --- Cell cIN is now filled with reactor    
+cell cIN  0 fill reactor -sCUBE
+
+/******** Axial boundaries of the reactor ************/
+surf sModelBot    pz -100 % Bottom of geometry model
+surf sModelTop    pz  100 % Top of geometry model
+surf sReflBot     pz  -50 % Bottom of graphite reflector
+surf sReflTop     pz   50 % Top of graphite reflector
+
+/******** Radial cells of the reactor ****************/
+cell cRadialCore         reactor water      -sCYL1        sModelBot -sModelTop
+cell cRadialWater1       reactor water       sCYL1 -sCYL2 sModelBot -sModelTop
+cell cRadialReflectorBot reactor water       sCYL2 -sCYL3 sModelBot -sReflBot
+cell cRadialReflectorMid reactor graphite    sCYL2 -sCYL3 sReflBot  -sReflTop
+cell cRadialReflectorTop reactor water       sCYL2 -sCYL3 sReflTop  -sModelTop
+cell cRadialWater2       reactor water       sCYL3 -sCYL4 sModelBot -sModelTop
+cell cRadialOutside1     reactor outside     sCYL4
+cell cRadialOutside2     reactor outside    -sCYL4       -sModelBot
+cell cRadialOutside3     reactor outside    -sCYL4        sModelTop
+
+% --- Fuel part
+pin pFuel
+fuel       0.3975
+void       0.4125
+Zircaloy4  0.4750
+water
+
+% --- End plug in water
+pin pPlug
+Zircaloy4  0.4750
+water
+
+% --- End plug in support grid
+pin pPlugInSteel
+Zircaloy4  0.4750
+water      0.4850
+ssteel
+
+surf sLowerBot pz -37.0 % Bottom of the lower plate
+surf sLowerTop pz -35.0 % Top of the lower plate
+surf sFuelBot  pz -25.0 % Bottom of the active fuel
+surf sFuelTop  pz  25.0 % Top of the active fuel
+surf sUpperBot pz  30.0 % Bottom of the upper grid plate
+surf sUpperTop pz  32.0 % Top of the upper grid plate
+surf sRodTop   pz  35.0 % Top of the fuel rods
+
+/***** Vertical layers (cells) for fuel rod ****/
+
+% --- 3D universe for fuel pins
+%     These cells are part of an universe "F"
+
+cell cFP0 F water                        -sLowerBot
+cell cFP1 F fill pPlugInSteel  sLowerBot -sLowerTop
+cell cFP2 F fill pPlug         sLowerTop -sFuelBot
+cell cFP3 F fill pFuel         sFuelBot  -sFuelTop
+cell cFP4 F fill pPlug         sFuelTop  -sUpperBot
+cell cFP5 F fill pPlugInSteel  sUpperBot -sUpperTop
+cell cFP6 F fill pPlug         sUpperTop -sRodTop
+cell cFP7 F water              sRodTop
+
+% --- Cell cIN is now filled with the universe "F"
+cell cIN  0 fill F -sCUBE
+
+% --- XY-plot
+
+plot 3 200 200 0 -1 1 -1 1
+
+% --- XZ-plot
+
+plot 2 100 400 0 -1 1 -50 50
