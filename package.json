@@ -1,7 +1,7 @@
 {
-  "name": "serpent",
-  "displayName": "Serpent",
-  "description": "Serpent syntax highlighting",
+  "name": "serpent-2-syntax-highlighting",
+  "displayName": "Serpent 2 Syntax Highlighting",
+  "publisher": "ColeFritsch",
   "version": "0.0.1",
   "engines": {
     "vscode": "^1.80.0"
