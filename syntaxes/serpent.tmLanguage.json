@@ -3861,7 +3861,7 @@
       "patterns": [
         {
           "match": "\\S+",
-          "name": "invalid.serpent"
+          "name": "punctuation.definition.tag.error.serpent"
         }
       ]
     }
