@@ -30,6 +30,12 @@
         "scopeName": "source.serpent",
         "path": "./syntaxes/serpent.tmLanguage.json"
       }
+    ],
+    "snippets": [
+      {
+        "language": "serpent",
+        "path": "snippets/serpent.tmSnippets.json"
+      }
     ]
   },
   "license": "SEE LICENSE IN LICENSE",

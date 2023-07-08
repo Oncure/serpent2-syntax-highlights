@@ -9,6 +9,7 @@ Below is a screenshot of an example from the [Serpent 2 wiki tutorial](https://s
 # Features
 * Syntax highlighting
 * Limited error highlighting
+* Material definition snippets
 
 # Installation
 
